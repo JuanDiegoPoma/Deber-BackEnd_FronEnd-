@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero-shot Classification</title>
+</head>
+<body>
+    <h1>Zero-shot Classification</h1>
+    <div>
+        <label for="texto">Ingrese el texto:</label>
+        <input type="text" id="texto" name="texto">
+    </div>
+    <button onclick="clasificarTexto()">Clasificar</button>
+    <p id="resultado"></p>
+
+    <!-- Axios library -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        function clasificarTexto() {
+            const texto = document.getElementById('texto').value;
+            
+            axios.post('http://localhost:5010/clasificar', {
+                texto: texto
+            })
+            .then(response => {
+                document.getElementById('resultado').innerText = `Categoría: ${response.data.label}`;
+            })
+            .catch(error => {
+                console.error('Hubo un error al clasificar el texto:', error);
+                document.getElementById('resultado').innerText = 'Hubo un error al clasificar el texto.';
+            });
+        }
+    </script>
+</body>
+</html>
